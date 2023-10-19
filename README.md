@@ -10,6 +10,7 @@ One can change the three different forces during simulation by adjusting the sli
 ## Dependencies
 - Python 3.x
 - Pygame
+- Pygame GUI
 
 ## Installation
 To run the simulation, you need to have Python installed along with the Pygame library. You can install Pygame using pip:
