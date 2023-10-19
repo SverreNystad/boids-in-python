@@ -2,6 +2,7 @@ import math
 from random import randint, uniform
 
 import pygame as pg
+import pygame_gui
 
 # Color constants
 BLACK = (0, 0, 0)
@@ -43,6 +44,46 @@ class Simulation:
         self.boids = []
         for i in range(NUM_BOIDS):
             self.boids.append(Boid(self, (randint(0, SCREEN_WIDTH), randint(0, SCREEN_HEIGHT))))
+        
+        self.manager = pygame_gui.UIManager((SCREEN_WIDTH, SCREEN_HEIGHT), 'theme.json')
+
+        self.separation_slider = pygame_gui.elements.UIHorizontalSlider(
+            relative_rect=pg.Rect((50, 10), (100, 25)),  # position for the first slider
+            start_value=SEPARATION,
+            value_range=(0, 5),
+            manager=self.manager
+        )
+        self.alignment_slider = pygame_gui.elements.UIHorizontalSlider(
+            relative_rect=pg.Rect((200, 10), (100, 25)),  # position for the second slider
+            start_value=ALIGNMENT,
+            value_range=(0, 5),
+            manager=self.manager
+        )
+        self.cohesion_slider = pygame_gui.elements.UIHorizontalSlider(
+            relative_rect=pg.Rect((350, 10), (100, 25)),  # position for the third slider
+            start_value=COHESION,
+            value_range=(0, 5),
+            manager=self.manager
+        )
+
+        # Create UILabels for displaying the values
+        self.separation_label = pygame_gui.elements.UILabel(
+            relative_rect=pg.Rect((50, 40), (100, 20)),  # position below the first slider
+            text=f"Separation: {SEPARATION}",
+            manager=self.manager
+        )
+        self.alignment_label = pygame_gui.elements.UILabel(
+            relative_rect=pg.Rect((200, 40), (100, 20)),  # position below the second slider
+            text=f"Alignment: {ALIGNMENT}",
+            manager=self.manager
+        )
+        self.cohesion_label = pygame_gui.elements.UILabel(
+            relative_rect=pg.Rect((350, 40), (100, 20)),  # position below the third slider
+            text=f"Cohesion: {COHESION}",
+            manager=self.manager
+        )
+
+        
 
     def events(self):
         for event in pg.event.get():
@@ -77,6 +118,30 @@ class Simulation:
             self.events()
             self.update()
             self.draw()
+
+            time_delta = self.clock.tick(self.fps)/1000.0
+
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    self.running = False
+
+                self.manager.process_events(event)
+
+            self.manager.update(time_delta)
+            
+            global SEPARATION, ALIGNMENT, COHESION  
+            SEPARATION = self.separation_slider.get_current_value()
+            ALIGNMENT = self.alignment_slider.get_current_value()
+            COHESION = self.cohesion_slider.get_current_value()
+
+            self.separation_label.set_text(f"Separation: {SEPARATION:.2f}")  # update text with current value
+            self.alignment_label.set_text(f"Alignment: {ALIGNMENT:.2f}")    # update text with current value
+            self.cohesion_label.set_text(f"Cohesion: {COHESION:.2f}")
+
+            # Removed the line that was causing the error
+            self.manager.draw_ui(self.screen)
+
+            pg.display.update()
 
 
 class PhysicsObjet:
