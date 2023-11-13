@@ -13,7 +13,7 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
 # Parameters
-NUM_BOIDS = 200
+NUM_BOIDS = 100
 BOID_SIZE = 10
 SPEED = 3
 MAX_FORCE = 0.3
@@ -40,6 +40,13 @@ class Simulation:
         self.screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.screen_rect = self.screen.get_rect()
         self.fps = 60
+
+        # Set title of window
+        pg.display.set_caption("Boids")
+
+        # Load the icon image and set it as the window icon
+        icon = pg.image.load('boids.png')
+        pg.display.set_icon(icon)
 
         self.boids = []
         for i in range(NUM_BOIDS):
