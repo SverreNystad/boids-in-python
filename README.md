@@ -1,6 +1,6 @@
 # Boid Simulation 
 <div align="center">
-  <img src="https://github.com/SverreNystad/boids-in-python/assets/89105607/b216064c-12d2-4312-be2a-055d77d7cf76" width="400" height="400">
+  <img src="boids.png" width="400" height="400">
 </div>
 
 ## Description
