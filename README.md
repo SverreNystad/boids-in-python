@@ -7,6 +7,8 @@
 This Python script simulates the complex behavior of a flock of birds, known as "Boids", using a few simple rules: separation, alignment, and cohesion, along with wandering behavior. The simulation utilizes the Pygame library for visualization and runs in real-time, displaying Boids as they interact with each other according to the defined parameters and behaviors.
 One can change the three different forces during simulation by adjusting the sliders.
 
+[![Boids moving](https://i.gyazo.com/f37a7d8c3102542ca7804a0fe605fd69.gif)](https://gyazo.com/f37a7d8c3102542ca7804a0fe605fd69)
+
 ## Dependencies
 - Python 3.x
 - Pygame
