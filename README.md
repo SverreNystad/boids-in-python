@@ -10,6 +10,7 @@ One can change the three different forces during simulation by adjusting the sli
   
 [![Boids moving](https://i.gyazo.com/f37a7d8c3102542ca7804a0fe605fd69.gif)](https://gyazo.com/f37a7d8c3102542ca7804a0fe605fd69)
 </div>
+
 ## Dependencies
 - Python 3.x
 - Pygame
