@@ -13,7 +13,7 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
 # Parameters
-NUM_BOIDS = 100
+NUM_BOIDS = 300
 BOID_SIZE = 10
 SPEED = 3
 MAX_FORCE = 0.3
@@ -48,9 +48,14 @@ class Simulation:
         icon = pg.image.load('boids.png')
         pg.display.set_icon(icon)
 
+        # Create boids
         self.boids = []
         for i in range(NUM_BOIDS):
-            self.boids.append(Boid(self, (randint(0, SCREEN_WIDTH), randint(0, SCREEN_HEIGHT))))
+            position = (randint(0, SCREEN_WIDTH), randint(0, SCREEN_HEIGHT))
+            while any(boid.pos == position for boid in self.boids):
+                position = (randint(0, SCREEN_WIDTH), randint(0, SCREEN_HEIGHT))
+
+            self.boids.append(Boid(self, position))
         
         self.manager = pygame_gui.UIManager((SCREEN_WIDTH, SCREEN_HEIGHT), 'theme.json')
 
@@ -149,7 +154,6 @@ class Simulation:
             self.manager.draw_ui(self.screen)
 
             pg.display.update()
-
 
 class PhysicsObjet:
 
