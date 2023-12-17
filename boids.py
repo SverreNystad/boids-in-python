@@ -310,8 +310,12 @@ class Boid(PhysicsObjet):
         Takes a list of boids in view and returns a force vector that is capped by the max force
         """
         force_vector /= len(boids_in_view)
+        # Make sure the force vector is not 0
+        if force_vector.length() <= 0:
+            return force_vector
+        
         force_vector = force_vector.normalize() * self.speed - self.vel
-        # force_vector = force_vector * self.speed - self.vel
+
         if force_vector.length() > self.max_force:
             force_vector.scale_to_length(self.max_force)
         return force_vector
