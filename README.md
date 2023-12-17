@@ -17,17 +17,15 @@ One can change the three different forces during simulation by adjusting the sli
 - Pygame GUI
 
 ## Installation
-To run the simulation, you need to have Python installed along with the Pygame library. You can install Pygame using pip:
-
-```
-pip install pygame
-pip install pygame_gui
+To run the simulation, you need to install the dependencies. You can do this by running the following command in your terminal:
+```bash
+pip install -r requirements.txt
 ```
 
 ## Usage
 After installing the dependencies, you can run the simulation by executing the script in your terminal:
 
-```
+```bash
 python boids.py
 ```
 
