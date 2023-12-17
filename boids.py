@@ -13,7 +13,7 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
 # Parameters
-NUM_BOIDS = 100
+NUM_BOIDS = 300
 BOID_SIZE = 10
 SPEED = 3
 MAX_FORCE = 0.3
@@ -48,9 +48,14 @@ class Simulation:
         icon = pg.image.load('boids.png')
         pg.display.set_icon(icon)
 
+        # Create boids
         self.boids = []
         for i in range(NUM_BOIDS):
-            self.boids.append(Boid(self, (randint(0, SCREEN_WIDTH), randint(0, SCREEN_HEIGHT))))
+            position = (randint(0, SCREEN_WIDTH), randint(0, SCREEN_HEIGHT))
+            while any(boid.pos == position for boid in self.boids):
+                position = (randint(0, SCREEN_WIDTH), randint(0, SCREEN_HEIGHT))
+
+            self.boids.append(Boid(self, position))
         
         self.manager = pygame_gui.UIManager((SCREEN_WIDTH, SCREEN_HEIGHT), 'theme.json')
 
@@ -150,7 +155,6 @@ class Simulation:
 
             pg.display.update()
 
-
 class PhysicsObjet:
 
     def __init__(self, simulation, position):
@@ -205,9 +209,9 @@ class Boid(PhysicsObjet):
         Updates the acceleration of the boid by adding together the different forces that acts on it
         """
         self.acc += self.wander()  # Wandering force
-        self.acc += self.separation() * SEPARATION  # separation force scaled with a controll parameter
-        self.acc += self.alignment() * ALIGNMENT  # alignement force scaled with a controll parameter
-        self.acc += self.cohesion() * COHESION  # cohesion force scaled with a controll parameter
+        self.acc += self.separation() * SEPARATION  # separation force scaled with a control parameter
+        self.acc += self.alignment() * ALIGNMENT  # alignment force scaled with a control parameter
+        self.acc += self.cohesion() * COHESION  # cohesion force scaled with a control parameter
 
         # move by calling super
         super().update()
@@ -306,8 +310,12 @@ class Boid(PhysicsObjet):
         Takes a list of boids in view and returns a force vector that is capped by the max force
         """
         force_vector /= len(boids_in_view)
+        # Make sure the force vector is not 0
+        if force_vector.length() <= 0:
+            return force_vector
+        
         force_vector = force_vector.normalize() * self.speed - self.vel
-        # force_vector = force_vector * self.speed - self.vel
+
         if force_vector.length() > self.max_force:
             force_vector.scale_to_length(self.max_force)
         return force_vector
