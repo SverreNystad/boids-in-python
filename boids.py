@@ -209,9 +209,9 @@ class Boid(PhysicsObjet):
         Updates the acceleration of the boid by adding together the different forces that acts on it
         """
         self.acc += self.wander()  # Wandering force
-        self.acc += self.separation() * SEPARATION  # separation force scaled with a controll parameter
-        self.acc += self.alignment() * ALIGNMENT  # alignement force scaled with a controll parameter
-        self.acc += self.cohesion() * COHESION  # cohesion force scaled with a controll parameter
+        self.acc += self.separation() * SEPARATION  # separation force scaled with a control parameter
+        self.acc += self.alignment() * ALIGNMENT  # alignment force scaled with a control parameter
+        self.acc += self.cohesion() * COHESION  # cohesion force scaled with a control parameter
 
         # move by calling super
         super().update()
